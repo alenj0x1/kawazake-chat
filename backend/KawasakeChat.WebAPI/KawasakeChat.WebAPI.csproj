@@ -19,7 +19,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\KawasakeChat.Application\KawasakeChat.Application.csproj" />
       <ProjectReference Include="..\KawasakeChat.Domain\KawasakeChat.Domain.csproj" />
+      <ProjectReference Include="..\KawasakeChat.Mapping\KawasakeChat.Mapping.csproj" />
     </ItemGroup>
 
 </Project>

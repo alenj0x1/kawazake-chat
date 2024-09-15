@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KawasakeChat.Domain\KawasakeChat.Domain.csproj" />
+      <ProjectReference Include="..\KawasakeChat.Dto\KawasakeChat.Dto.csproj" />
+      <ProjectReference Include="..\KawasakeChat.Models\KawasakeChat.Models.csproj" />
+    </ItemGroup>
+
+</Project>
