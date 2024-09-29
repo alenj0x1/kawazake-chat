@@ -14,4 +14,8 @@
       <ProjectReference Include="..\KawasakeChat.Shared\KawasakeChat.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+    </ItemGroup>
+
 </Project>

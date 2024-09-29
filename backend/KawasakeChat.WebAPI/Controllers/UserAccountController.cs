@@ -1,6 +1,7 @@
 ﻿using KawasakeChat.Application.Interfaces.Services;
-using KawasakeChat.Application.Models.Requests;
+using KawasakeChat.Models.Requests;
 using KawasakeChat.WebAPI.Interfaces.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KawasakeChat.WebAPI.Controllers;
@@ -21,11 +22,31 @@ public class UserAccountController(IUserAccountService userAccountService) : Con
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return BadRequest(e.Message);
         }
     }
 
+    [HttpGet("Me")]
+    [Authorize]
+    public async Task<IActionResult> Me()
+    {
+        try
+        {
+            var userId = User.FindFirst("UserId") ?? throw new Exception("user not found");
+            var srvData = _srvUserAccount.Me(userId);
+            
+            return Ok(srvData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
+    }
+    
     [HttpGet("{username}")]
+    [Authorize]
     public async Task<IActionResult> GetUserAccount(string username)
     {
         try
@@ -35,11 +56,13 @@ public class UserAccountController(IUserAccountService userAccountService) : Con
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return BadRequest(e.Message);
         }
     }
 
     [HttpGet]
+    [Authorize(Roles = "SuperUser, Moderator")]
     public async Task<IActionResult> GetUserAccounts()
     {
         try
@@ -49,6 +72,7 @@ public class UserAccountController(IUserAccountService userAccountService) : Con
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             return BadRequest(e.Message);
         }
     }

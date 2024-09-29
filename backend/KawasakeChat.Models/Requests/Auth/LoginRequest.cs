@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KawasakeChat.Models.Requests;
+namespace KawasakeChat.Models.Requests.Auth;
 
-public class UserAccountCreateRequest
+public class LoginRequest
 {
     [Required]
     [MaxLength(32)]
@@ -10,6 +10,4 @@ public class UserAccountCreateRequest
     [Required]
     [MaxLength(255)]
     public string Password { get; set; } = null!;
-    [MaxLength(255)]
-    public string? Status { get; set; }
 }

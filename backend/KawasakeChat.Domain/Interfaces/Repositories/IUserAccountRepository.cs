@@ -7,5 +7,6 @@ public interface IUserAccountRepository
 {
     Task<Useraccount> CreateUserAccount(UserAccountCreateDto data);
     Useraccount? GetUserAccount(string username);
+    Useraccount? GetUserAccount(Guid userId);
     List<Useraccount> GetUserAccounts();
 }

@@ -5,48 +5,51 @@ namespace KawasakeChat.Shared;
 
 public static class Hasher
 {
-    private const char PasswordSeparator = ';';
+    private const char Separator = ';';
     
-    public static string HashPassword(string password)
+    public static string Hash(string value)
     {
         try
         {
             var salt = RandomSalt();
-            var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(password + salt));
+            var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(value + salt));
             var base64 = Convert.ToBase64String(hashData);
 
-            return $"{base64}{PasswordSeparator}{salt}";
+            return $"{base64}{Separator}{salt}";
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
 
-    private static string HashPassword(string password, string salt)
+    private static string Hash(string value, string salt)
     {
         try
         {
-            var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(password + salt));
+            var hashData = SHA256.HashData(Encoding.UTF8.GetBytes(value + salt));
             var base64 = Convert.ToBase64String(hashData);
 
-            return $"{base64}{PasswordSeparator}{salt}";
+            return $"{base64}{Separator}{salt}";
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
     
-    public static bool ComparePassword(string password, string hashedPassword)
+    public static bool Compare(string value, string hashedValue)
     {
         try
         {
-            var salt = hashedPassword.Split(PasswordSeparator)[1];
-            return HashPassword(password, salt) == hashedPassword;;
+            var salt = hashedValue.Split(Separator)[1];
+            return Hash(value, salt) == hashedValue;
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
@@ -57,8 +60,9 @@ public static class Hasher
         {
             return Convert.ToBase64String(RandomNumberGenerator.GetBytes(128 / 8));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }

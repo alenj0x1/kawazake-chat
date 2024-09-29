@@ -46,6 +46,19 @@ public class UserAccountRepository(KawasakeChatDbContext kawasakeChatDbContext) 
         }
     }
 
+    public Useraccount? GetUserAccount(Guid userId)
+    {
+        try
+        {
+            return _ctx.Useraccounts.FirstOrDefault(usra => usra.UserId == userId && usra.DeletedAt == null);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     public List<Useraccount> GetUserAccounts()
     {
         try

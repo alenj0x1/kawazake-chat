@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using KawasakeChat.Application.Models.Requests;
+using KawasakeChat.Models.Requests;
 using KawasakeChat.Domain.Entities;
 using KawasakeChat.Dto.UserAccount;
 

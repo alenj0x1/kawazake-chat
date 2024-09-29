@@ -24,6 +24,10 @@ public partial class KawasakeChatDbContext : DbContext
 
     public virtual DbSet<Groupchatmessage> Groupchatmessages { get; set; }
 
+    public virtual DbSet<Tokenaccess> Tokenaccesses { get; set; }
+
+    public virtual DbSet<Tokenrefresh> Tokenrefreshes { get; set; }
+
     public virtual DbSet<Useraccount> Useraccounts { get; set; }
 
     public virtual DbSet<Useraccountrole> Useraccountroles { get; set; }
@@ -61,35 +65,38 @@ public partial class KawasakeChatDbContext : DbContext
 
         modelBuilder.Entity<Groupchatmember>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("groupchatmember");
+            entity.HasKey(e => e.MemberId).HasName("groupchatmember_pkey");
 
-            entity.HasIndex(e => e.MemberId, "groupchatmember_member_id_key").IsUnique();
+            entity.ToTable("groupchatmember");
 
+            entity.HasIndex(e => e.UserId, "groupchatmember_user_id_key").IsUnique();
+
+            entity.Property(e => e.MemberId)
+                .HasDefaultValueSql("gen_random_uuid()")
+                .HasColumnName("member_id");
             entity.Property(e => e.GroupId).HasColumnName("group_id");
             entity.Property(e => e.JoinedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnName("joined_at");
-            entity.Property(e => e.MemberId).HasColumnName("member_id");
             entity.Property(e => e.Role)
                 .HasDefaultValue(2)
                 .HasColumnName("role");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.Group).WithMany()
+            entity.HasOne(d => d.Group).WithMany(p => p.Groupchatmembers)
                 .HasForeignKey(d => d.GroupId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("groupchatmember_group_id_fkey");
 
-            entity.HasOne(d => d.Member).WithOne()
-                .HasForeignKey<Groupchatmember>(d => d.MemberId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("groupchatmember_member_id_fkey");
-
-            entity.HasOne(d => d.RoleNavigation).WithMany()
+            entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Groupchatmembers)
                 .HasForeignKey(d => d.Role)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("groupchatmember_role_fkey");
+
+            entity.HasOne(d => d.User).WithOne(p => p.Groupchatmember)
+                .HasForeignKey<Groupchatmember>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("groupchatmember_user_id_fkey");
         });
 
         modelBuilder.Entity<Groupchatmemberrole>(entity =>
@@ -131,6 +138,51 @@ public partial class KawasakeChatDbContext : DbContext
                 .HasForeignKey(d => d.MemberId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("groupchatmessage_member_id_fkey");
+        });
+
+        modelBuilder.Entity<Tokenaccess>(entity =>
+        {
+            entity.HasKey(e => e.TokenAccessId).HasName("tokenaccess_pkey");
+
+            entity.ToTable("tokenaccess");
+
+            entity.Property(e => e.TokenAccessId).HasColumnName("token_access_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Expiration).HasColumnName("expiration");
+            entity.Property(e => e.TokenRefreshId).HasColumnName("token_refresh_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Value).HasColumnName("value");
+
+            entity.HasOne(d => d.TokenRefresh).WithMany(p => p.Tokenaccesses)
+                .HasForeignKey(d => d.TokenRefreshId)
+                .HasConstraintName("tokenaccess_token_refresh_id_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Tokenaccesses)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("tokenaccess_user_id_fkey");
+        });
+
+        modelBuilder.Entity<Tokenrefresh>(entity =>
+        {
+            entity.HasKey(e => e.TokenRefreshId).HasName("tokenrefresh_pkey");
+
+            entity.ToTable("tokenrefresh");
+
+            entity.Property(e => e.TokenRefreshId).HasColumnName("token_refresh_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Expiration).HasColumnName("expiration");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Value).HasColumnName("value");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Tokenrefreshes)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("tokenrefresh_user_id_fkey");
         });
 
         modelBuilder.Entity<Useraccount>(entity =>

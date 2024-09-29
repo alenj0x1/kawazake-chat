@@ -9,4 +9,9 @@ var app = builder.Build();
 
 app.MapControllers();
 app.UseHttpsRedirection();
+
+// Middlewares
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.Run();

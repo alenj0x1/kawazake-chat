@@ -1,4 +1,4 @@
-﻿using KawasakeChat.Application.Models.Requests;
+﻿using KawasakeChat.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KawasakeChat.WebAPI.Interfaces.Controllers;
