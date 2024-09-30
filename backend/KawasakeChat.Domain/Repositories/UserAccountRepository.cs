@@ -9,22 +9,14 @@ public class UserAccountRepository(KawasakeChatDbContext kawasakeChatDbContext) 
 {
     private readonly KawasakeChatDbContext  _ctx = kawasakeChatDbContext;
     
-    public async Task<Useraccount> CreateUserAccount(UserAccountCreateDto data)
+    public async Task<Useraccount> CreateUserAccount(Useraccount userAccount)
     {
         try
         {
-            var usrAccount = new Useraccount()
-            {
-                Username = data.Username,
-                Password = data.Password,
-                Status = data.Status,
-                Role = data.Role,
-            };
-            
-            await _ctx.Useraccounts.AddAsync(usrAccount);
+            await _ctx.Useraccounts.AddAsync(userAccount);
             await _ctx.SaveChangesAsync();
 
-            return usrAccount;
+            return userAccount;
         }
         catch (Exception e)
         {
@@ -59,11 +51,11 @@ public class UserAccountRepository(KawasakeChatDbContext kawasakeChatDbContext) 
         }
     }
 
-    public List<Useraccount> GetUserAccounts()
+    public IQueryable<Useraccount> GetUserAccounts()
     {
         try
         {
-            return [.. _ctx.Useraccounts.Where(usra => usra.DeletedAt == null)];
+            return _ctx.Useraccounts.Where(usra => usra.DeletedAt == null);
         }
         catch (Exception e)
         {

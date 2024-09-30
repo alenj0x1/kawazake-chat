@@ -22,7 +22,7 @@ public class Token(IConfiguration configuration, IAppRepository appRepository) :
             claims.AddClaim(new Claim("UserId", userAccount.UserId.ToString()));
 
             var usrRole = _repApp.GetUserAccountRole(userAccount.Role) ?? throw new Exception("user invalid role");
-            claims.AddClaim(new Claim("Role", usrRole.Name));
+            claims.AddClaim(new Claim(ClaimTypes.Role, usrRole.Name));
 
             var secretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["Jwt:SecretKey"] ?? throw new Exception("jwt secret key is null")));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

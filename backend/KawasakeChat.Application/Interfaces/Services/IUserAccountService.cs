@@ -9,5 +9,5 @@ public interface IUserAccountService
     Task<UserAccountDto> CreateUserAccount(UserAccountCreateRequest request);
     UserAccountDto GetUserAccount(string username);
     UserAccountDto Me(Claim userId);
-    List<UserAccountDto> GetUserAccounts();
+    List<UserAccountDto> GetUserAccounts(BaseRequest request);
 }

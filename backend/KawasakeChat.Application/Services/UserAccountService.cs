@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using KawasakeChat.Application.Interfaces.Services;
+using KawasakeChat.Domain.Entities;
 using KawasakeChat.Models.Requests;
 using KawasakeChat.Domain.Interfaces.Repositories;
 using KawasakeChat.Dto.UserAccount;
@@ -19,12 +20,17 @@ public class UserAccountService(IMapper mapper, IUserAccountRepository userAccou
         {
             var gtUserAccount = _repUserAccount.GetUserAccount(request.Username);
             if (gtUserAccount is not null) throw new ArgumentException("Username already exists");
-
-            var crtUserAccountDto = _mapper.Map<UserAccountCreateDto>(request);
-            crtUserAccountDto.Password = Hasher.Hash(request.Password);
             
-            var data = await _repUserAccount.CreateUserAccount(crtUserAccountDto);
-            return _mapper.Map<UserAccountDto>(data);
+            var crtUserAccount = await _repUserAccount.CreateUserAccount(new Useraccount()
+            {
+                Username = request.Username,
+                AvatarUrl = request.AvatarUrl,
+                Password = Hasher.Hash(request.Password),
+                Status = request.Status,
+            });
+            
+            var mapped = _mapper.Map<UserAccountDto>(crtUserAccount);
+            return mapped;
         }
         catch (Exception e)
         {
@@ -63,11 +69,11 @@ public class UserAccountService(IMapper mapper, IUserAccountRepository userAccou
         }
     }
 
-    public List<UserAccountDto> GetUserAccounts()
+    public List<UserAccountDto> GetUserAccounts(BaseRequest request)
     {
         try
         {
-            var data = _repUserAccount.GetUserAccounts();
+            var data = _repUserAccount.GetUserAccounts().Skip(request.Offset).Take(request.Limit).ToList();
             return _mapper.Map <List<UserAccountDto>>(data);
         }
         catch (Exception e)

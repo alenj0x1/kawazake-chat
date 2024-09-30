@@ -7,5 +7,5 @@ public interface IUserAccountController
 {
     Task<IActionResult> CreateUserAccount([FromBody] UserAccountCreateRequest request);
     Task<IActionResult> GetUserAccount(string username);
-    Task<IActionResult> GetUserAccounts();
+    Task<IActionResult> GetUserAccounts([FromBody] BaseRequest request);
 }

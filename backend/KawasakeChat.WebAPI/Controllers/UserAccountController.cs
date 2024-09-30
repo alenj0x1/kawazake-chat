@@ -63,11 +63,11 @@ public class UserAccountController(IUserAccountService userAccountService) : Con
 
     [HttpGet]
     [Authorize(Roles = "SuperUser, Moderator")]
-    public async Task<IActionResult> GetUserAccounts()
+    public async Task<IActionResult> GetUserAccounts([FromBody] BaseRequest request)
     {
         try
         {
-            var srvData = _srvUserAccount.GetUserAccounts();
+            var srvData = _srvUserAccount.GetUserAccounts(request);
             return Ok(srvData);
         }
         catch (Exception e)

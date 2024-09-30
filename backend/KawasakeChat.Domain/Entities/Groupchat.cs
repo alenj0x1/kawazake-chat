@@ -5,9 +5,13 @@ namespace KawasakeChat.Domain.Entities;
 
 public partial class Groupchat
 {
-    public Guid GroupId { get; set; }
+    public Guid GroupChatId { get; set; }
+
+    public Guid OwnerId { get; set; }
 
     public string Name { get; set; } = null!;
+
+    public string? AvatarUrl { get; set; }
 
     public string InviteCode { get; set; } = null!;
 
@@ -22,4 +26,6 @@ public partial class Groupchat
     public virtual ICollection<Groupchatmember> Groupchatmembers { get; set; } = new List<Groupchatmember>();
 
     public virtual ICollection<Groupchatmessage> Groupchatmessages { get; set; } = new List<Groupchatmessage>();
+
+    public virtual Useraccount Owner { get; set; } = null!;
 }

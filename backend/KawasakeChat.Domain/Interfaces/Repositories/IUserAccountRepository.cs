@@ -5,8 +5,8 @@ namespace KawasakeChat.Domain.Interfaces.Repositories;
 
 public interface IUserAccountRepository
 {
-    Task<Useraccount> CreateUserAccount(UserAccountCreateDto data);
+    Task<Useraccount> CreateUserAccount(Useraccount userAccount);
     Useraccount? GetUserAccount(string username);
     Useraccount? GetUserAccount(Guid userId);
-    List<Useraccount> GetUserAccounts();
+    IQueryable<Useraccount> GetUserAccounts();
 }

@@ -9,6 +9,8 @@ public partial class Useraccount
 
     public string Username { get; set; } = null!;
 
+    public string? AvatarUrl { get; set; }
+
     public string Password { get; set; } = null!;
 
     public string? Status { get; set; }
@@ -19,7 +21,9 @@ public partial class Useraccount
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual Groupchatmember? Groupchatmember { get; set; }
+    public virtual ICollection<Groupchatmember> Groupchatmembers { get; set; } = new List<Groupchatmember>();
+
+    public virtual ICollection<Groupchat> Groupchats { get; set; } = new List<Groupchat>();
 
     public virtual Useraccountrole RoleNavigation { get; set; } = null!;
 

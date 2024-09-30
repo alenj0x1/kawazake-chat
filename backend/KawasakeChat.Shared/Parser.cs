@@ -13,4 +13,17 @@ public static class Parser
             return null;
         }
     }
+    
+    public static string WithoutWhiteSpaces(string value)
+    {
+        try
+        {
+            return value.Replace(" ", "");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

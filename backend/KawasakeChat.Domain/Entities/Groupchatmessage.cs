@@ -5,7 +5,7 @@ namespace KawasakeChat.Domain.Entities;
 
 public partial class Groupchatmessage
 {
-    public Guid GroupId { get; set; }
+    public Guid GroupChatId { get; set; }
 
     public Guid MemberId { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Groupchatmessage
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual Groupchat Group { get; set; } = null!;
+    public virtual Groupchat GroupChat { get; set; } = null!;
 
     public virtual Groupchatmember Member { get; set; } = null!;
 }

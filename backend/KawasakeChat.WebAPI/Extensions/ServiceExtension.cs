@@ -15,7 +15,7 @@ namespace KawasakeChat.WebAPI.Extensions;
 
 public static class ServiceExtension
 {
-    public static void AddServices(this IServiceCollection services, IConfiguration configuration)
+    public static async Task AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Database
         services.AddDbContext<KawasakeChatDbContext>(builder =>
@@ -85,13 +85,22 @@ public static class ServiceExtension
         // Services
         services.AddScoped<IUserAccountService, UserAccountService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IGroupChatService, GroupChatService>();
         
         // Repositories
         services.AddScoped<IUserAccountRepository, UserAccountRepository>();
         services.AddScoped<IAppRepository, AppRepository>();
+        services.AddScoped<IGroupChatRepository, GroupChatRepository>();
         services.AddScoped<ITokenRepository, TokenRepository>();
         
         // Helpers
         services.AddScoped<IToken, Token>();
+        
+        // First user creation
+        var userAccountRepository = services.BuildServiceProvider().GetRequiredService<IUserAccountRepository>();
+        if (await Verify.FirstUserCreation(userAccountRepository, configuration))
+        {
+            Console.WriteLine("First user account created!");
+        }
     }
 }

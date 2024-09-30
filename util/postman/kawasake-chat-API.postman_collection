@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"katashi 4\",\r\n    \"password\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"username\": \"administrador\",\r\n    \"password\": \"administrador\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -37,18 +37,56 @@
 					"response": []
 				},
 				{
-					"name": "Get a user account by username",
+					"name": "Me",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/userAccount/katashi 2",
+							"raw": "{{BASE_URL}}/userAccount/me",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"userAccount",
-								"katashi 2"
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a user account by username",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/userAccount/alenj0x1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"userAccount",
+								"alenj0x1"
 							]
 						}
 					},
@@ -56,9 +94,31 @@
 				},
 				{
 					"name": "Get all user accounts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{BASE_URL}}/userAccount",
 							"host": [
@@ -66,6 +126,430 @@
 							],
 							"path": [
 								"userAccount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"alenj0x1\",\r\n    \"password\": \"alenj0x1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Renew user access",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"2hWTmPGugXUMcizR+FoIEgQpYcfWpaKnaf2iSGdZOL4=;YhnEaaw+96lW4bxlboCKuQ==\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/renewAccess",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"renewAccess"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GroupChat",
+			"item": [
+				{
+					"name": "Administrator",
+					"item": [
+						{
+							"name": "Update a group chat member",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupChatId\": \"5104c1c8-205c-49e3-8e08-bd2b8db55069\",\r\n    \"memberId\": \"1d0fda8a-bce5-4ced-951a-9c27d89f833a\",\r\n    \"memberRole\": 3,\r\n    \"memberAvatarUrl\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/groupChat/administrator/update",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"groupChat",
+										"administrator",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a group chat member",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupChatId\": \"5104c1c8-205c-49e3-8e08-bd2b8db55069\",\r\n    \"memberId\": \"54793fa6-2a89-4bc2-89c7-ed85569c5647\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/groupChat/administrator/delete",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"groupChat",
+										"administrator",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create a group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test group\",\r\n    \"private\": true,\r\n    \"password\": \"a password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get group chats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"limit\": 10,\r\n    \"offset\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join to group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"inviteCode\": \"testgroup_uoFVEURYSVlHBTA\",\r\n    \"password\": \"a password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/join",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"join"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Leave to group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/leave/2ebbb674-ab3c-4d62-affc-816547439862",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"leave",
+								"2ebbb674-ab3c-4d62-affc-816547439862"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupChatId\": \"1fc04102-f983-4511-964f-a57d56e3311c\",\r\n    \"name\": \"\",\r\n    \"inviteCode\": \"\",\r\n    \"password\": \"\",\r\n    \"private\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password of a group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupChatId\": \"\",\r\n    \"currentPassword\": \"\",\r\n    \"newPassword\": \"\",\r\n    \"confirmNewPassword\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/changePassword",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer ownership",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newOwnerId\": \"5f3ca80b-4979-4039-b158-fcb39dd95258\",\r\n    \"groupChatId\": \"1fc04102-f983-4511-964f-a57d56e3311c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/transferOwnership",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"transferOwnership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a group chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{USER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/groupChat/delete/91e029a9-6b02-47ff-99b7-5ef2fcf78861",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"groupChat",
+								"delete",
+								"91e029a9-6b02-47ff-99b7-5ef2fcf78861"
 							]
 						}
 					},
