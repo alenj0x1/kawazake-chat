@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="KawasakeChat">
+	<section id="hero">
+		<div class="d-container">
+			<div class="presentation">
+				<img class="img" src="https://sticker-collection.com/stickers/plain/LINE_NEKOMIMI_PARADISE/512/e0c01f97-8f2b-4a32-8191-44758ed2c88cfile_2855161.webp" alt="neko tired">
+				<h1 class="title">KawasakeChat</h1>
+				<p class="para">Kawasake is your chat with friends solution </p>
+			</div>
+
+			<div class="buttons">
+				<a class="btn btn-primary" role="button" href="/createAccount">Create a account</a>
+				<a class="btn btn-secondary" role="button" href="/signIn">Sign in</a>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style scoped>
+	#hero,
+	.d-container,
+	.presentation {
+		@apply flex flex-col
+	}
+
+	#hero {
+		@apply justify-center items-center min-h-svh w-full
+	}
+
+	.d-container {
+		@apply gap-4
+	}
+
+	.presentation {
+		@apply items-center
+	}
+
+	.buttons {
+		@apply flex gap-2
+	}
+
+	.buttons > * {
+		@apply w-full
+	}
+
+	.img {
+		@apply h-64 mb-4
+	}
+</style>

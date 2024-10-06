@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="kawasakeChat - Create a account">
+  <main>
+    <div class="d-container">
+      <form class="form">
+        <header class="form-header">
+          <img src="/svgs/weather-color-moon-stars-svgrepo-com.svg" class="svg"></img>
+          <h2 class="subt">Create a account</h2>
+          <p class="para">You are just one step away from joining any group. </p>
+        </header>
+
+        <div class="form-content">
+          <input type="text" placeholder="Username" class="input">
+          <input type="text" placeholder="Password" class="input">
+        </div>
+
+        <footer class="form-footer">
+          <button id="createAccount" class="btn btn-primary">Create my account</button>
+        </footer>
+      </form>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.getElementById("createAccount")?.addEventListener('click', (e) => {
+    fetch(`${BASE_URL}/userAccount/create`)
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  })
+</script>
+
+<style scoped>
+.d-container {
+  @apply flex justify-center
+}
+</style>
